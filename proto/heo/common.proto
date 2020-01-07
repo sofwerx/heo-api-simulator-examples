@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package com.kopismobile.heo;
+option java_package = "com.kopismobile.heo_proto";
+option java_outer_classname = "CommonProto";
+
+message Empty {}
+

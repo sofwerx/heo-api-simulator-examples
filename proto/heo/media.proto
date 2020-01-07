@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package com.kopismobile.heo;
+option java_package = "com.kopismobile.heo_proto";
+option java_outer_classname = "MediaProto";
+
+import "heo/common.proto";
+
+enum StreamFormat {
+    OTHER_FORMAT = 0;
+    AUDIO = 1;
+    VIDEO = 2;
+    IMAGE = 3;
+}
+
+message MarkRequest {
+    string stream_uri = 1;
+    uint64 timestamp = 2;
+    string object_description = 3;
+}
+
+// This is the message format for any media sources that can be accessed 
+// by device, such as an RTSP feed or audio stream
+message MediaSource {
+    string unique_id = 7;
+    string platform_id = 8;
+    string name = 1;
+    string desc = 2;
+    StreamFormat stream_format = 6;
+    string stream_uri = 4;
+    bool active = 5;
+}
+
+service MediaService {
+    rpc MarkRequest (Empty) returns (Empty);
+    // a server_to_client RPC
+    //
+    // the server returns a media source it is aware of
+    rpc GetMediaSource (Empty) returns (stream MediaSource) {
+    // comment out for the api simulator
+    //        option (com.kopismobile.heo.broker.cache_responses) = true;
+    };
+}
